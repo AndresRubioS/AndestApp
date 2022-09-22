@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class Campos(
     var Nombre:String = "",
-    var lista:Boolean= false
+    var isChecked: Boolean = false
 ) : Parcelable {
 }

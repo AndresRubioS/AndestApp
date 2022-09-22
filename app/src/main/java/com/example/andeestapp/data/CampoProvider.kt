@@ -5,6 +5,7 @@ class CampoProvider {
        var camposList = mutableListOf<Campos>(
             Campos(
                 "Compra",
+                false
 
 
             ),
