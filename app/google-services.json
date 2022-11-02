@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "171639755506",
+    "project_id": "elenacastillo-portfolio",
+    "storage_bucket": "elenacastillo-portfolio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171639755506:android:7feb9a2f1e5990b4ef766b",
+        "android_client_info": {
+          "package_name": "com.example.andeestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171639755506-s8v8udskpskcumehl40oa4a1n4qsmnkh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyVvnqaQ5hfxN7S4C9eonA4idg-Ddjdvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171639755506-s8v8udskpskcumehl40oa4a1n4qsmnkh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

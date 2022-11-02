@@ -5,10 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.data.Campos
 
-class CamposAdapter(private val camposList:List<Campos>, private val onClickListener:(Campos) -> Unit): RecyclerView.Adapter<CamposViewHolder>() {
+class CamposAdapter(private val camposList:MutableList<Campos>): RecyclerView.Adapter<CamposViewHolder>() {
 
 
-
+    fun deleteDoneTodos() {
+        camposList.removeAll { todo ->
+            todo.isChecked
+        }
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CamposViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -17,7 +22,7 @@ class CamposAdapter(private val camposList:List<Campos>, private val onClickList
 
     override fun onBindViewHolder(holder: CamposViewHolder, position: Int) {
         val item = camposList[position]
-        holder.render(item, onClickListener)
+        holder.render(item)
 
     }
 

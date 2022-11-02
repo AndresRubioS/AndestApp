@@ -21,6 +21,12 @@
             android:layout_height="wrap_content"
             android:text="Button" />
 
+        <Button
+            android:id="@+id/btn_borrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="borrar" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_campos"
             android:layout_width="match_parent"
