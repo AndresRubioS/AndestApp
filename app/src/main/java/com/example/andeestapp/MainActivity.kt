@@ -4,16 +4,18 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andeestapp.databinding.ActivityMainBinding
 
 
-import com.example.data.CampoProvider
 import com.example.data.Campos
+import com.example.data.ListaProvider
+import com.example.data.Listas
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -22,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todoAdapter: CamposAdapter
     private lateinit var binding: ActivityMainBinding
     val db = Firebase.firestore
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,8 +35,9 @@ class MainActivity : AppCompatActivity() {
 
 
         initRecyclerView()
+        configSwip()
         addCampo()
-        todoAdapter = CamposAdapter(mutableListOf())
+      //  todoAdapter = CamposAdapter(mutableListOf())
 
         val user = hashMapOf(
             "first" to "Ada1",
@@ -47,6 +53,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun configSwip() {
+        binding.swip.setOnRefreshListener {
+
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swip.isRefreshing = false
+
+            },1000)
+        }
     }
 
     private fun addCampo() {
@@ -95,8 +112,8 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents->
                 CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
-
-                recyclerView.adapter = CamposAdapter(CampoProvider.camposList)
+                Log.d("fotosImagen",CampoProvider.camposList.toString())
+                recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
 
 
             }
@@ -116,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     private fun onItemSelected(it: Campos) {
-       // val intent = Intent(this, AudioTextActivity::class.java)
+        val intent = Intent(this, AudioTextActivity::class.java)
         intent.putExtra("campo", it)
         startActivity(intent)
     }

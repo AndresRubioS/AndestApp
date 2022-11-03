@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.data.Campos
 
-class CamposAdapter(private val camposList:MutableList<Campos>): RecyclerView.Adapter<CamposViewHolder>() {
+class CamposAdapter(private val camposList:MutableList<Campos>, private val onClickListener:(Campos) -> Unit): RecyclerView.Adapter<CamposViewHolder>() {
 
 
     fun deleteDoneTodos() {
@@ -22,7 +22,8 @@ class CamposAdapter(private val camposList:MutableList<Campos>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: CamposViewHolder, position: Int) {
         val item = camposList[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
+
 
     }
 
