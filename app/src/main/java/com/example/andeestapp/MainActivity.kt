@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnBorrar.setOnClickListener {
             todoAdapter.deleteDoneTodos()
         }
+        //prueba en github
 
 
     }
