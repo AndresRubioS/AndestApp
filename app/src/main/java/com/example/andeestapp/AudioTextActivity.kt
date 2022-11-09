@@ -1,40 +1,23 @@
 package com.example.andeestapp
 
-import android.annotation.SuppressLint
-import android.app.Activity
+
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.speech.RecognizerIntent
 import android.util.Log
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityAudioTexto2Binding
+
 import com.example.data.Campos
-import com.example.data.ListaProvider
 import com.example.data.Listas
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import java.io.File
-import com.google.firebase.storage.ktx.component1
-import com.google.firebase.storage.ktx.component2
-import com.google.firebase.storage.ktx.component3
-
-
-import java.lang.Exception
-import java.math.RoundingMode.valueOf
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class AudioTextActivity : AppCompatActivity() {
 
@@ -94,7 +77,7 @@ class AudioTextActivity : AppCompatActivity() {
     private fun initRecyclerView() {
 
         photoRecyclingView = binding.rvGaleria
-        photoRecyclingView.layoutManager = LinearLayoutManager(this)
+        photoRecyclingView.layoutManager = GridLayoutManager(this, 3)
 
         photoArrayList = arrayListOf()
         getPhotoData()
