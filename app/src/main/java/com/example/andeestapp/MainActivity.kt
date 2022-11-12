@@ -7,17 +7,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Adapter
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityMainBinding
+import com.example.andeestapp.galery.GaleriaActivity
+import com.example.andeestapp.galery.GaleriaViewHolder
 
 
 import com.example.data.Campos
-import com.example.data.ListaProvider
-import com.example.data.Listas
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,9 +52,7 @@ class MainActivity : AppCompatActivity() {
 // Add a new document with a generated ID
 
 
-        binding.btnBorrar.setOnClickListener {
-            todoAdapter.deleteDoneTodos()
-        }
+
         //prueba en github
         //hh
 
@@ -110,6 +112,8 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         val recyclerView = binding.rvCampos
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val itemToched = ItemTouchHelper(simpleCallback)
+        itemToched.attachToRecyclerView(recyclerView)
         db.collection("users")
             .get()
             .addOnSuccessListener { documents->
@@ -121,6 +125,25 @@ class MainActivity : AppCompatActivity() {
             }
 
     }
+    val simpleCallback = object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,0){
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ):Boolean{
+            val fromPosition = viewHolder.adapterPosition
+            val toPosition = target.adapterPosition
+            Collections.swap(CampoProvider.camposList,fromPosition,toPosition)
+            recyclerView.adapter?.notifyItemMoved(fromPosition,toPosition)
+            return false
+
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+        }
+    }
+
 
 //    private fun initRecyclerView() {
 //        val manager =  LinearLayoutManager(this)
@@ -135,7 +158,7 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     private fun onItemSelected(it: Campos) {
-        val intent = Intent(this, AudioTextActivity::class.java)
+        val intent = Intent(this, GaleriaActivity::class.java)
         intent.putExtra("campo", it)
         startActivity(intent)
     }

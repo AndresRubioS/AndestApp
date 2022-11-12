@@ -1,4 +1,4 @@
-package com.example.andeestapp
+package com.example.andeestapp.galery
 
 import android.graphics.Paint
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.andeestapp.databinding.ItemGaleriaBinding
+import com.example.data.Campos
 import com.example.data.Listas
 
 
@@ -14,7 +15,8 @@ class GaleriaViewHolder(view : View): RecyclerView.ViewHolder(view) {
     val binding = ItemGaleriaBinding.bind(view)
 
 
-    fun render(CamposModel: Listas) {
+    fun render(CamposModel: Listas, onClickListener: (Listas) -> Unit) {
+        itemView.setOnClickListener { onClickListener(CamposModel) }
 
        // binding.textView3.text = CamposModel.titulo
         Glide.with(binding.imageView.context)
@@ -25,4 +27,5 @@ class GaleriaViewHolder(view : View): RecyclerView.ViewHolder(view) {
 
 
     }
+
 }

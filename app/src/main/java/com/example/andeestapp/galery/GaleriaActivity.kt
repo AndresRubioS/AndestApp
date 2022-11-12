@@ -1,14 +1,17 @@
-package com.example.andeestapp
+package com.example.andeestapp.galery
 
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.andeestapp.R
 import com.example.andeestapp.databinding.ActivityAudioTexto2Binding
+
 
 import com.example.data.Campos
 import com.example.data.Listas
@@ -19,7 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
-class AudioTextActivity : AppCompatActivity() {
+class GaleriaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAudioTexto2Binding
     private val REQUEST_CODE_SPEECH_INPUT = 18
@@ -57,6 +60,7 @@ class AudioTextActivity : AppCompatActivity() {
         if(campos != null){
             val campo = binding.TituloPlan
             campo.setText(campos.Nombre)
+            Toast.makeText(this, campos.Nombre, Toast.LENGTH_SHORT).show()
 
 
 
@@ -71,6 +75,9 @@ class AudioTextActivity : AppCompatActivity() {
 
 
         }
+
+
+
     }
 
 
@@ -103,13 +110,14 @@ class AudioTextActivity : AppCompatActivity() {
                         photoArrayList.add(photo!!)
 
                     }
-                    photoRecyclingView.adapter = GaleriaAdapter(photoArrayList)
+                    photoRecyclingView.adapter = GaleriaAdapter(photoArrayList, {onItemSelected(it)})
 
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
+
             }
 
         })
@@ -182,6 +190,11 @@ class AudioTextActivity : AppCompatActivity() {
         val imagen = Listas(ListaNombre = url)
         mDatabaseReference.child(key).setValue(imagen)
 
+    }
+    private fun onItemSelected(it: Listas) {
+        val intent = Intent(this, GaleriaDetallesActivity::class.java)
+        intent.putExtra("imagen", it)
+        startActivity(intent)
     }
 
 }

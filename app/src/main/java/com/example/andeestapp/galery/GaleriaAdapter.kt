@@ -1,13 +1,13 @@
-package com.example.andeestapp
+package com.example.andeestapp.galery
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.data.Campos
+import com.example.andeestapp.R
 import com.example.data.Listas
 
 
-class GaleriaAdapter(private val camposList:MutableList<Listas>): RecyclerView.Adapter<GaleriaViewHolder>() {
+class GaleriaAdapter(private val camposList:MutableList<Listas>, private val onClickListener:(Listas) -> Unit): RecyclerView.Adapter<GaleriaViewHolder>() {
 
 
 
@@ -19,7 +19,7 @@ class GaleriaAdapter(private val camposList:MutableList<Listas>): RecyclerView.A
 
         override fun onBindViewHolder(holder: GaleriaViewHolder, position: Int) {
             val item = camposList[position]
-            holder.render(item)
+            holder.render(item,onClickListener)
 
 
         }
