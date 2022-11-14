@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityMainBinding
+
 import com.example.andeestapp.galery.GaleriaActivity
 import com.example.andeestapp.galery.GaleriaViewHolder
 
