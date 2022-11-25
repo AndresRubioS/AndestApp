@@ -39,10 +39,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
+
+
         initRecyclerView()
         configSwip()
         addCampo()
       //  todoAdapter = CamposAdapter(mutableListOf())
+
 
         val user = hashMapOf(
             "first" to "Ada1",
@@ -117,9 +121,14 @@ class MainActivity : AppCompatActivity() {
         db.collection("users")
             .get()
             .addOnSuccessListener { documents->
+
+
+
+
                 CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
                 Log.d("fotosImagen",CampoProvider.camposList.toString())
                 recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
+                CampoProvider.camposList.sortBy { it.Nombre }
 
 
             }
