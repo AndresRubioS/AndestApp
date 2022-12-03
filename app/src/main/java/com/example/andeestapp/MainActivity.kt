@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Adapter
-import android.widget.EditText
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityMainBinding
+
 
 import com.example.andeestapp.galery.GaleriaActivity
 import com.example.andeestapp.galery.GaleriaViewHolder
@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
 
 // Add a new document with a generated ID
 
+        binding.button.setOnClickListener{
+
+        }
+
 
 
         
@@ -76,18 +80,38 @@ class MainActivity : AppCompatActivity() {
 
     private fun addCampo() {
         binding.btnAddCampo.setOnClickListener{
+            initRecyclerView2()
             val builder = AlertDialog.Builder(this)
             val inflater = layoutInflater
             val dialogLayout = inflater.inflate(R.layout.layout_add_campo,null)
             val editText = dialogLayout.findViewById<EditText>(R.id.et_add_campo)
+            val calendario = dialogLayout.findViewById<CalendarView>(R.id.calendarView)
+            val fecha = dialogLayout.findViewById<TextView>(R.id.fecha)
+            calendario.setOnDateChangeListener{view,year,month,dayOfMonth ->
+
+                val msg = (dayOfMonth.toString() + "-" + (month + 1) + "-" + year)
+
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                fecha.setText(msg)
+
+
+            }
+
+
+
             with(builder){
                 setTitle("pon")
                 setPositiveButton("OK"){dialog, which->
                     val resultado = editText.text.toString()
                     if (resultado.isNotEmpty()){
-                        CampoProvider.camposList.add(Campos(resultado))
+
+                      val fechaMSG =  fecha.text
+
+
+
+                        CampoProvider.camposList.add(Campos(resultado,false,fechaMSG.toString()))
                         db.collection("users")
-                            .add(Campos(resultado))
+                            .add(Campos(resultado,false,fechaMSG.toString()))
                             .addOnSuccessListener { documentReference ->
                                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                             }
@@ -113,22 +137,44 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun initRecyclerView2() {
+        val recyclerView = binding.rvCampos
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val itemToched = ItemTouchHelper(simpleCallback)
+        itemToched.attachToRecyclerView(recyclerView)
+        db.collection("us")
+            //  .whereEqualTo("checked",false)
+            // .orderBy("fecha")
+            .get()
+            .addOnSuccessListener { documents->
+
+
+                CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
+                Log.d("fotosImagen",CampoProvider.camposList.toString())
+                recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
+
+
+
+            }
+
+    }
     private fun initRecyclerView() {
         val recyclerView = binding.rvCampos
         recyclerView.layoutManager = LinearLayoutManager(this)
         val itemToched = ItemTouchHelper(simpleCallback)
         itemToched.attachToRecyclerView(recyclerView)
         db.collection("users")
+          //  .whereEqualTo("checked",false)
+           // .orderBy("fecha")
             .get()
             .addOnSuccessListener { documents->
-
-
 
 
                 CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
                 Log.d("fotosImagen",CampoProvider.camposList.toString())
                 recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
-                CampoProvider.camposList.sortBy { it.Nombre }
+
 
 
             }

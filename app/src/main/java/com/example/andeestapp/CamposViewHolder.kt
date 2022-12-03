@@ -21,6 +21,7 @@ class CamposViewHolder(view : View): RecyclerView.ViewHolder(view) {
 
     fun render(CamposModel: Campos, onClickListener: (Campos) -> Unit){
         binding.textView.text = CamposModel.Nombre
+        binding.fechaTV.text = CamposModel.fecha
         binding.checkBox.isChecked = CamposModel.isChecked
         toggleStrikeThrough(binding.textView, CamposModel.isChecked)
         itemView.setOnClickListener { onClickListener(CamposModel) }
