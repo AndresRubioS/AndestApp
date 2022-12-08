@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         initRecyclerViewChekedTrue()
         initRecyclerViewChekedFalse()
 
-      //  todoAdapter = CamposAdapter(mutableListOf())
+        //  todoAdapter = CamposAdapter(mutableListOf())
 
 
 
@@ -82,28 +82,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerViewChekedTrue() {
 
-            binding.button2.setOnClickListener {
-                CampoProvider.camposList.clear()
-                val recyclerView = binding.rvCampos
-                recyclerView.layoutManager = LinearLayoutManager(this)
-                val itemToched = ItemTouchHelper(simpleCallback)
-                itemToched.attachToRecyclerView(recyclerView)
-                db.collection("users")
-                    .whereEqualTo("checked",true)
-                    // .orderBy("fecha")
-                    .get()
-                    .addOnSuccessListener { documents->
+        binding.button2.setOnClickListener {
+            CampoProvider.camposList.clear()
+            val recyclerView = binding.rvCampos
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            val itemToched = ItemTouchHelper(simpleCallback)
+            itemToched.attachToRecyclerView(recyclerView)
+            db.collection("users")
+                .whereEqualTo("checked",true)
+                // .orderBy("fecha")
+                .get()
+                .addOnSuccessListener { documents->
 
 
-                        CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
-                        Log.d("fotosImagen",CampoProvider.camposList.toString())
-                        recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
+                    CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
+                    Log.d("fotosImagen",CampoProvider.camposList.toString())
+                    recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
 
 
 
-                    }
+                }
 
-            }
+        }
     }
 
     private fun configSwip() {
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity() {
                     val resultado = editText.text.toString()
                     if (resultado.isNotEmpty()){
 
-                      val fechaMSG =  fecha.text
+                        val fechaMSG =  fecha.text
 
 
 
@@ -204,13 +204,14 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun initRecyclerView() {
+        CampoProvider.camposList.clear()
         val recyclerView = binding.rvCampos
         recyclerView.layoutManager = LinearLayoutManager(this)
         val itemToched = ItemTouchHelper(simpleCallback)
         itemToched.attachToRecyclerView(recyclerView)
         db.collection("users")
-         .whereEqualTo("checked",false)
-           // .orderBy("fecha")
+            .whereEqualTo("checked",false)
+            //.orderBy("fecha")
             .get()
             .addOnSuccessListener { documents->
 
@@ -218,6 +219,7 @@ class MainActivity : AppCompatActivity() {
                 CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
                 Log.d("fotosImagen",CampoProvider.camposList.toString())
                 recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
+                CampoProvider.camposList.sortBy { it.fecha }
 
 
 
