@@ -19,4 +19,5 @@
     </style>
     <style name="Theme.AndeEstApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.AndeEstApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

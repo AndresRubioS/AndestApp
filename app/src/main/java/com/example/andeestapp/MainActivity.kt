@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var todoAdapter: CamposAdapter
     private lateinit var binding: ActivityMainBinding
+
     val db = Firebase.firestore
 
 
@@ -45,26 +46,64 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         configSwip()
         addCampo()
+        initRecyclerViewChekedTrue()
+        initRecyclerViewChekedFalse()
+
       //  todoAdapter = CamposAdapter(mutableListOf())
 
 
-        val user = hashMapOf(
-            "first" to "Ada1",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
 
-// Add a new document with a generated ID
+    }
 
-        binding.button.setOnClickListener{
+    private fun initRecyclerViewChekedFalse() {
+        binding.button.setOnClickListener {
+            CampoProvider.camposList.clear()
+            val recyclerView = binding.rvCampos
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            val itemToched = ItemTouchHelper(simpleCallback)
+            itemToched.attachToRecyclerView(recyclerView)
+            db.collection("users")
+                .whereEqualTo("checked",false)
+                // .orderBy("fecha")
+                .get()
+                .addOnSuccessListener { documents->
+
+
+                    CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
+                    Log.d("fotosImagen",CampoProvider.camposList.toString())
+                    recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
+
+
+
+                }
 
         }
+    }
+
+    private fun initRecyclerViewChekedTrue() {
+
+            binding.button2.setOnClickListener {
+                CampoProvider.camposList.clear()
+                val recyclerView = binding.rvCampos
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                val itemToched = ItemTouchHelper(simpleCallback)
+                itemToched.attachToRecyclerView(recyclerView)
+                db.collection("users")
+                    .whereEqualTo("checked",true)
+                    // .orderBy("fecha")
+                    .get()
+                    .addOnSuccessListener { documents->
+
+
+                        CampoProvider.camposList.addAll(documents.toObjects(Campos::class.java))
+                        Log.d("fotosImagen",CampoProvider.camposList.toString())
+                        recyclerView.adapter = CamposAdapter(CampoProvider.camposList,{onItemSelected(it)})
 
 
 
-        
+                    }
 
-
+            }
     }
 
     private fun configSwip() {
@@ -72,6 +111,12 @@ class MainActivity : AppCompatActivity() {
 
 
             Handler(Looper.getMainLooper()).postDelayed({
+                CampoProvider.camposList.clear()
+                val recyclerView = binding.rvCampos
+
+                recyclerView.adapter?.notifyDataSetChanged()
+                initRecyclerView()
+
                 binding.swip.isRefreshing = false
 
             },1000)
@@ -80,7 +125,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun addCampo() {
         binding.btnAddCampo.setOnClickListener{
-            initRecyclerView2()
             val builder = AlertDialog.Builder(this)
             val inflater = layoutInflater
             val dialogLayout = inflater.inflate(R.layout.layout_add_campo,null)
@@ -100,7 +144,7 @@ class MainActivity : AppCompatActivity() {
 
 
             with(builder){
-                setTitle("pon")
+                setTitle("Que harán los maracos culiaos?")
                 setPositiveButton("OK"){dialog, which->
                     val resultado = editText.text.toString()
                     if (resultado.isNotEmpty()){
@@ -110,10 +154,10 @@ class MainActivity : AppCompatActivity() {
 
 
                         CampoProvider.camposList.add(Campos(resultado,false,fechaMSG.toString()))
-                        db.collection("users")
-                            .add(Campos(resultado,false,fechaMSG.toString()))
+                        db.collection("users").document(resultado)
+                            .set(Campos(resultado,false,fechaMSG.toString()))
                             .addOnSuccessListener { documentReference ->
-                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+
                             }
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
@@ -165,7 +209,7 @@ class MainActivity : AppCompatActivity() {
         val itemToched = ItemTouchHelper(simpleCallback)
         itemToched.attachToRecyclerView(recyclerView)
         db.collection("users")
-          //  .whereEqualTo("checked",false)
+         .whereEqualTo("checked",false)
            // .orderBy("fecha")
             .get()
             .addOnSuccessListener { documents->
