@@ -5,4 +5,5 @@
     <style name="CustomTabStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">18dp</item>
     </style>
+    
 </resources>
