@@ -23,11 +23,12 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TableLayout
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabBackground="@color/amarillo"
@@ -37,9 +38,16 @@
                 app:tabTextAppearance="@style/CustomTabStyle"
                 app:tabTextColor="@color/purple_700">
 
-            </TableLayout>
+            </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+
+        </androidx.viewpager.widget.ViewPager>
+
 
 
         <Button

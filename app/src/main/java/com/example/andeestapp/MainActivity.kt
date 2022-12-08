@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityMainBinding
+import com.example.andeestapp.fragments.PlanesFragment
 
 
 import com.example.andeestapp.galery.GaleriaActivity
@@ -50,6 +51,25 @@ class MainActivity : AppCompatActivity() {
         initRecyclerViewChekedFalse()
 
         //  todoAdapter = CamposAdapter(mutableListOf())
+
+
+        setUpTabs()
+
+
+
+    }
+
+    private fun setUpTabs() {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(PlanesFragment(),"Planes")
+        adapter.addFragment(PlanesFragment(),"Planes")
+        adapter.addFragment(PlanesFragment(),"Planes")
+        adapter.addFragment(PlanesFragment(),"Planes")
+        adapter.addFragment(PlanesFragment(),"Planes")
+        adapter.addFragment(PlanesFragment(),"Planes")
+        binding.viewPager.adapter = adapter
+        binding.tabs.setupWithViewPager(binding.viewPager)
+       // binding.tabs.getTabAt(0)!!.setIcon
 
 
 
