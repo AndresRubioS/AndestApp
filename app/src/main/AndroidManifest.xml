@@ -11,11 +11,21 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndeEstApp">
+        <receiver
+            android:name=".MensajesMuchachitaWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mensajes_muchachita_widget_info" />
+        </receiver>
+
         <activity
             android:name=".galery.GaleriaDetallesActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".galery.GaleriaActivity"
             android:exported="true" />
