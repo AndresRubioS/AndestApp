@@ -6,8 +6,8 @@ class CampoProvider {
     companion object{
        var camposList = mutableListOf<Campos>(
 
-
-
+        )
+        var peliculas = mutableListOf<Campos>(
 
         )
 

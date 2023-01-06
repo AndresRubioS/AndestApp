@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andeestapp.databinding.ActivityMainBinding
+import com.example.andeestapp.fragments.ImportanteFragment
+import com.example.andeestapp.fragments.PelisFragment
 import com.example.andeestapp.fragments.PlanFragment
 import com.example.andeestapp.fragments.PlanesFragment
 
@@ -53,8 +55,8 @@ class MainActivity : AppCompatActivity() {
     private fun setUpTabs() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(PlanFragment(),"Planes")
-        adapter.addFragment(PlanFragment(),"Pelis")
-        adapter.addFragment(PlanFragment(),"Documentos importantes")
+        adapter.addFragment(PelisFragment(),"Pelis")
+        adapter.addFragment(ImportanteFragment(),"Documentos importantes")
 
         binding.viewPager.adapter = adapter
         binding.tabs.setupWithViewPager(binding.viewPager)
