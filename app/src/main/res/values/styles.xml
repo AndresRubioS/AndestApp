@@ -5,7 +5,6 @@
     <style name="CustomTabStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">18dp</item>
     </style>
-
     <style name="Widget.AndeEstApp.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
         <item name="android:background">?android:attr/colorBackground</item>
